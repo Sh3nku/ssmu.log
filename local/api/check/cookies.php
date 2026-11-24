@@ -9,6 +9,10 @@ if ( $_COOKIE['cookie'] === 'accepted' || $_COOKIE['cookie'] === 'declined' ) {
 } else if ( !empty( $_REQUEST['param'] ) ) {
     $status = $_REQUEST['param'];
 
+    if ( $status === 'accepted' ) {
+        \Approval\Cookie::Log();
+    }
+
     setcookie( 'cookie', $status, [
         'expires' => time() + ( 365 * 24 * 60 * 60 ),
         'path' => '/',
