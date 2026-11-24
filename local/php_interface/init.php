@@ -11,8 +11,13 @@ header('Access-Control-Allow-Methods: POST');
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Cache");
 
 Loader::registerAutoLoadClasses( null, [
-    'Approval\Cookie' => '/local/php_interface/classes/Approval/Cookie.php'
+    'Approval\Cookie' => '/local/php_interface/classes/Approval/Cookie.php',
+    'Approval\Form' => '/local/php_interface/classes/Approval/Form.php'
 ]);
+
+AddEventHandler( 'form', 'onAfterResultAdd', function ( $WEB_FORM_ID, $RESULT_ID )  {
+    Approval\Form::Log( $WEB_FORM_ID );
+});
 
 if (class_exists('\\Dotenv\\Dotenv')) {
     $env = \Dotenv\Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT']);
